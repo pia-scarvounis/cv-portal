@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import DeleteButton from "./DeleteButton"; // importerer DeleteButton
+import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";  // 🔹 Importerer EditButton
 
 function PersonalInfoForm({ setPersonalInfo }) {
     const [name, setName] = useState("");
@@ -7,22 +8,33 @@ function PersonalInfoForm({ setPersonalInfo }) {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState(""); 
     const [address, setAddress] = useState("");
-    const [savedInfo, setSavedInfo] = useState(null); // holder på lagret info for visning
+    const [savedInfo, setSavedInfo] = useState(null); 
 
     const handleSavePersonalInfo = () => {
         const newInfo = { name, dob, email, phone, address };
-        setPersonalInfo(newInfo); // sender data til App.jsx
-        setSavedInfo(newInfo); // oppdaterer synlig info i komponenten
+        setPersonalInfo(newInfo); 
+        setSavedInfo(newInfo); 
     };
 
     const handleDeletePersonalInfo = () => {
-        setPersonalInfo({}); // nullstiller i App.jsx
-        setSavedInfo(null);  // nullstiller i denne komponenten
+        setPersonalInfo({}); 
+        setSavedInfo(null);  
         setName("");
         setDob("");
         setEmail("");
         setPhone("");
         setAddress("");
+    };
+
+    const handleEditPersonalInfo = () => {
+        if (savedInfo) {
+            setName(savedInfo.name);
+            setDob(savedInfo.dob);
+            setEmail(savedInfo.email);
+            setPhone(savedInfo.phone);
+            setAddress(savedInfo.address);
+            setSavedInfo(null); // Fjerner lagret visning slik at brukeren kan redigere
+        }
     };
 
     return (
@@ -70,7 +82,7 @@ function PersonalInfoForm({ setPersonalInfo }) {
 
             <button type="button" onClick={handleSavePersonalInfo}>Lagre personlig informasjon</button>
 
-            {/* viser lagret informasjon hvis den finnes */}
+            {/* ✅ Viser lagret informasjon hvis den finnes */}
             {savedInfo && (
                 <div>
                     <h4>Personlig informasjon lagt til:</h4>
@@ -82,7 +94,8 @@ function PersonalInfoForm({ setPersonalInfo }) {
                         <li>Adresse: {savedInfo.address}</li>
                     </ul>
 
-                    {/* bruker DeleteButton til å slette hele seksjonen */}
+                    {/* 🖊️ EditButton for redigering + 🗑️ DeleteButton for sletting */}
+                    <EditButton onEdit={handleEditPersonalInfo} />
                     <DeleteButton onDelete={handleDeletePersonalInfo} />
                 </div>
             )}
@@ -91,5 +104,6 @@ function PersonalInfoForm({ setPersonalInfo }) {
 }
 
 export default PersonalInfoForm;
+
 
 

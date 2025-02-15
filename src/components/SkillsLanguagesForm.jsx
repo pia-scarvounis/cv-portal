@@ -1,18 +1,19 @@
 import React, { useState } from "react";
-import DeleteButton from "./DeleteButton"; // importerer den nye DeleteButton-komponenten
+import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";  // 🔹 Importerer EditButton
 
 function SkillsLanguagesForm({ setSkills, setLanguages }) {
     const [skills, setLocalSkills] = useState([]);
     const [languages, setLocalLanguages] = useState([]);
     const [skill, setSkill] = useState("");
-    const [language, setLanguage] = useState("");
+    const [language, setLanguage] = useState(""); // ✅ Rettet opp feilen
 
     const handleAddSkill = () => {
         if (skill) {
             const newSkills = [...skills, skill];
             setLocalSkills(newSkills);
-            setSkills(newSkills); // sender opp til App.jsx
-            setSkill(""); 
+            setSkills(newSkills);
+            setSkill("");
         }
     };
 
@@ -20,8 +21,8 @@ function SkillsLanguagesForm({ setSkills, setLanguages }) {
         if (language) {
             const newLanguages = [...languages, language];
             setLocalLanguages(newLanguages);
-            setLanguages(newLanguages); // sender opp til App.jsx
-            setLanguage(""); 
+            setLanguages(newLanguages);
+            setLanguage("");
         }
     };
 
@@ -35,6 +36,16 @@ function SkillsLanguagesForm({ setSkills, setLanguages }) {
         const updatedLanguages = languages.filter((_, i) => i !== index);
         setLocalLanguages(updatedLanguages);
         setLanguages(updatedLanguages);
+    };
+
+    const handleEditSkill = (index) => {
+        setSkill(skills[index]);
+        handleDeleteSkill(index);
+    };
+
+    const handleEditLanguage = (index) => {
+        setLanguage(languages[index]);
+        handleDeleteLanguage(index);
     };
 
     return (
@@ -53,7 +64,9 @@ function SkillsLanguagesForm({ setSkills, setLanguages }) {
             <ul>
                 {skills.map((sk, index) => (
                     <li key={index}>
-                        {sk} <DeleteButton onDelete={() => handleDeleteSkill(index)} /> {/* bruker DeleteButton */}
+                        {sk}  
+                        <EditButton onEdit={() => handleEditSkill(index)} />
+                        <DeleteButton onDelete={() => handleDeleteSkill(index)} />
                     </li>
                 ))}
             </ul>
@@ -70,7 +83,9 @@ function SkillsLanguagesForm({ setSkills, setLanguages }) {
             <ul>
                 {languages.map((lang, index) => (
                     <li key={index}>
-                        {lang} <DeleteButton onDelete={() => handleDeleteLanguage(index)} /> {/* bruker DeleteButton */}
+                        {lang}  
+                        <EditButton onEdit={() => handleEditLanguage(index)} />
+                        <DeleteButton onDelete={() => handleDeleteLanguage(index)} />
                     </li>
                 ))}
             </ul>
@@ -79,6 +94,8 @@ function SkillsLanguagesForm({ setSkills, setLanguages }) {
 }
 
 export default SkillsLanguagesForm;
+
+
 
 
 

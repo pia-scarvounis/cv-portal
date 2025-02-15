@@ -1,11 +1,15 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // Brukes for å navigere tilbake til skjemaet
 
 function CVPreview({ personalInfo, education, experience, skills, languages }) {
+    const navigate = useNavigate(); // 📌 Bruker navigasjon for å gå tilbake til skjemaene
+
     return (
         <div style={{ border: "2px solid black", padding: "20px", marginTop: "20px" }}>
-            <h2>📄 Min CV</h2>
+            <h2>📄 Forhåndsvisning av din CV</h2>
 
-            {/* personlig info */}
+
+            {/* 👤 Personlig informasjon */}
             {personalInfo.name && (
                 <div>
                     <h3>👤 Personlig informasjon</h3>
@@ -17,7 +21,7 @@ function CVPreview({ personalInfo, education, experience, skills, languages }) {
                 </div>
             )}
 
-            {/* utdanning */}
+            {/* 🎓 Utdanning */}
             {education.length > 0 && (
                 <div>
                     <h3>🎓 Utdanning</h3>
@@ -29,7 +33,7 @@ function CVPreview({ personalInfo, education, experience, skills, languages }) {
                 </div>
             )}
 
-            {/* arbeidserfaring */}
+            {/* 💼 Arbeidserfaring */}
             {experience.length > 0 && (
                 <div>
                     <h3>💼 Arbeidserfaring</h3>
@@ -41,7 +45,7 @@ function CVPreview({ personalInfo, education, experience, skills, languages }) {
                 </div>
             )}
 
-            {/* ferdigheter */}
+            {/* 🛠 Ferdigheter */}
             {skills.length > 0 && (
                 <div>
                     <h3>🛠 Ferdigheter</h3>
@@ -49,7 +53,7 @@ function CVPreview({ personalInfo, education, experience, skills, languages }) {
                 </div>
             )}
 
-            {/* språk */}
+            {/* 🌍 Språk */}
             {languages.length > 0 && (
                 <div>
                     <h3>🌍 Språk</h3>
@@ -61,3 +65,4 @@ function CVPreview({ personalInfo, education, experience, skills, languages }) {
 }
 
 export default CVPreview;
+

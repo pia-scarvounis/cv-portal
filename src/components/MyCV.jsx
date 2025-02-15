@@ -1,13 +1,12 @@
 import React from "react";
 
-function MyCV({ savedCVs }) {
+function MyCV({ savedCVs, onDeleteCV }) {
     return (
         <div>
             {savedCVs.length > 0 ? (
                 savedCVs.map((cv, index) => (
                     <div key={index} style={{ border: "2px solid black", padding: "20px", marginBottom: "20px" }}>
-                        <h2>📂 {personalInfo.name ? `${personalInfo.name}'s CV` : "Min CV"}</h2>
-
+                        <h2>📂 {cv.personalInfo.name ? `${cv.personalInfo.name}'s CV` : "Min CV"}</h2>
 
                         {/* Personlig informasjon */}
                         <h3>👤 Personlig informasjon</h3>
@@ -16,6 +15,7 @@ function MyCV({ savedCVs }) {
                         <p><strong>Telefon:</strong> {cv.personalInfo.phone || "Ikke fylt inn"}</p>
                         <p><strong>Fødselsdato:</strong> {cv.personalInfo.dob || "Ikke fylt inn"}</p>
                         <p><strong>Adresse:</strong> {cv.personalInfo.address || "Ikke fylt inn"}</p>
+
 
                         {/* Utdanning */}
                         {cv.education.length > 0 && (
@@ -66,5 +66,8 @@ function MyCV({ savedCVs }) {
 }
 
 export default MyCV;
+
+
+
 
 

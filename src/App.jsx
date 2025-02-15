@@ -19,6 +19,7 @@ function App() {
     const [savedMessage, setSavedMessage] = useState("");
     const [savedCVs, setSavedCVs] = useState([]);
 
+    // 🚀 Lagre en CV
     const handleSave = () => {
         const newCV = { personalInfo, education, experience, skills, languages };
         setSavedCVs([...savedCVs, newCV]); 
@@ -26,6 +27,12 @@ function App() {
     
         setSavedMessage("Alle opplysninger er lagret! ✅");
         setTimeout(() => setSavedMessage(""), 3000);
+    };
+
+    // 🗑️ Slett en CV
+    const handleDeleteCV = (index) => {
+        const updatedCVs = savedCVs.filter((_, i) => i !== index);
+        setSavedCVs(updatedCVs);
     };
 
     return (
@@ -53,12 +60,10 @@ function App() {
                         </>
                     } />
 
-                    {/* Sender savedCVs til MyCV */}
-                    <Route path="/my-cv" element={<MyCV savedCVs={savedCVs} />} />
+                    {/* ✅ Sender savedCVs og handleDeleteCV til MyCV */}
+                    <Route path="/my-cv" element={<MyCV savedCVs={savedCVs} onDeleteCV={handleDeleteCV} />} />
 
                     <Route path="/login" element={<LoginForm />} />
-                    <Route path="/my-cv" element={<MyCV personalInfo={personalInfo} />} />
-
                 </Routes>
             </main>
         </div>
@@ -66,6 +71,10 @@ function App() {
 }
 
 export default App;
+
+
+
+
 
 
 
