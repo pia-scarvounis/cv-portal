@@ -57,10 +57,12 @@ function App() {
                     <Route path="/my-cv" element={<MyCV savedCVs={savedCVs} />} />
 
                     <Route path="/login" element={<LoginForm />} />
+                    <Route path="/my-cv" element={<MyCV personalInfo={personalInfo} />} />
+
                 </Routes>
             </main>
         </div>
-    );
+    )
 }
 
 export default App;

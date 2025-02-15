@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import DeleteButton from "./DeleteButton"; // ✅ Importerer DeleteButton
+import DeleteButton from "./DeleteButton"; // importerer DeleteButton
 
 function PersonalInfoForm({ setPersonalInfo }) {
     const [name, setName] = useState("");
@@ -7,17 +7,17 @@ function PersonalInfoForm({ setPersonalInfo }) {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState(""); 
     const [address, setAddress] = useState("");
-    const [savedInfo, setSavedInfo] = useState(null); // ✅ Holder på lagret info for visning
+    const [savedInfo, setSavedInfo] = useState(null); // holder på lagret info for visning
 
     const handleSavePersonalInfo = () => {
         const newInfo = { name, dob, email, phone, address };
-        setPersonalInfo(newInfo); // ✅ Sender data til App.jsx
-        setSavedInfo(newInfo); // ✅ Oppdaterer synlig info i komponenten
+        setPersonalInfo(newInfo); // sender data til App.jsx
+        setSavedInfo(newInfo); // oppdaterer synlig info i komponenten
     };
 
     const handleDeletePersonalInfo = () => {
-        setPersonalInfo({}); // ✅ Nullstiller i App.jsx
-        setSavedInfo(null);  // ✅ Nullstiller i denne komponenten
+        setPersonalInfo({}); // nullstiller i App.jsx
+        setSavedInfo(null);  // nullstiller i denne komponenten
         setName("");
         setDob("");
         setEmail("");
