@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Routes, Route } from "react-router-dom"; 
+import React, { useState, useContext } from "react";
+import { Routes, Route, Navigate } from "react-router-dom"; 
+import AuthContext from "./context/AuthContext"; // 🔹 Henter innloggingsstatus
 import Header from "./components/Header";
 import PersonalInfoForm from "./components/PersonalInfoForm";
 import EducationForm from "./components/EducationForm";
@@ -11,6 +12,8 @@ import MyCV from "./components/MyCV";
 import LoginForm from "./components/LoginForm"; 
 
 function App() {
+    const { user } = useContext(AuthContext); // 🔹 Henter innloggingsstatus
+
     const [personalInfo, setPersonalInfo] = useState({});
     const [education, setEducation] = useState([]);
     const [experience, setExperience] = useState([]);
@@ -19,7 +22,6 @@ function App() {
     const [savedMessage, setSavedMessage] = useState("");
     const [savedCVs, setSavedCVs] = useState([]);
 
-    // 🚀 Lagre en CV
     const handleSave = () => {
         const newCV = { personalInfo, education, experience, skills, languages };
         setSavedCVs([...savedCVs, newCV]); 
@@ -29,18 +31,13 @@ function App() {
         setTimeout(() => setSavedMessage(""), 3000);
     };
 
-    // 🗑️ Slett en CV
-    const handleDeleteCV = (index) => {
-        const updatedCVs = savedCVs.filter((_, i) => i !== index);
-        setSavedCVs(updatedCVs);
-    };
-
     return (
         <div>
             <Header />
             <main>
                 <Routes>
-                    <Route path="/" element={
+                    {/* 🔹 Hvis brukeren ikke er logget inn, send til /login */}
+                    <Route path="/" element={user ? (
                         <>
                             <h2>Velkommen til CV-portalen</h2>
                             <p>Her kan du lage og administrere dine CV-er</p>
@@ -58,19 +55,21 @@ function App() {
                                 languages={languages} 
                             />
                         </>
-                    } />
+                    ) : <Navigate to="/login" />} /> {/* 🔹 Hvis ikke innlogget, send til login */}
 
-                    {/* ✅ Sender savedCVs og handleDeleteCV til MyCV */}
-                    <Route path="/my-cv" element={<MyCV savedCVs={savedCVs} onDeleteCV={handleDeleteCV} />} />
+                    {/* 🔹 Krever innlogging for å se "Min CV" */}
+                    <Route path="/my-cv" element={user ? <MyCV savedCVs={savedCVs} /> : <Navigate to="/login" />} />
 
+                    {/* 🔹 Logg inn-siden er alltid tilgjengelig */}
                     <Route path="/login" element={<LoginForm />} />
                 </Routes>
             </main>
         </div>
-    )
+    );
 }
 
 export default App;
+
 
 
 
